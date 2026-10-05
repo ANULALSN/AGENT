@@ -9,7 +9,7 @@ load_dotenv()
 
 openai_client=Groq(api_key=os.getenv("OPENAI_API_KEY"))
 
-def generate_text_basic(prompt: str, model = "openai/gpt-oss-120b", system_prompt: str = "You are a helpful AI assistant. Answer the user prompt directly using text. Do not make function or tool calls."):
+def generate_text_basic(prompt: str, model = "openai/gpt-oss-120b", system_prompt: str = "You are a helpful AI assistant."):
     response = openai_client.chat.completions.create(
         model=model,
         messages=[
@@ -23,3 +23,10 @@ def generate_text_basic(prompt: str, model = "openai/gpt-oss-120b", system_promp
 # print("Available Models:")
 # for m in models.data:
 #     print("-", m.id)
+
+def generate_text_with_conversation(messages,model = "openai/gpt-oss-120b"):
+    response = openai_client.chat.completions.create(
+        model=model,
+        messages=messages
+        )
+    return response.choices[0].message.content
